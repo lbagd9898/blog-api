@@ -1,0 +1,9 @@
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: coral;
+  color: black;
+  border: 1px dotted black;
+  width: 100%;
+}

@@ -1,11 +1,15 @@
 require("dotenv").config();
 const router = require("./routes/router");
+const passport = require(".middleware.passport");
 
 const express = require("express");
 
 const app = express();
 
 app.use(express.json());
+app.use(passport.initialize());
+
+//configure passport
 
 app.use("/", router);
 

@@ -9,6 +9,6 @@ router.get("/sign-up", controller.getSignUp);
 // router.post("/sign-up", controller.postSignUp);
 // router.post("log-in", controller.postLogIn);
 router.post("/log-in", controller.postLogIn);
-router.post("/posts", verifyToken, controller.getPosts);
+router.get("/posts", verifyToken, controller.getPosts);
 
 module.exports = router;

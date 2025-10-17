@@ -1,0 +1,10 @@
+.button {
+  background-color: coral;
+  font-weight: bold;
+  border: none;
+  box-shadow: 2px 2px 2px lightgray;
+}
+
+.button:hover {
+  background-color: #cd5b45;
+}
