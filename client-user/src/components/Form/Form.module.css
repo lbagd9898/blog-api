@@ -16,8 +16,9 @@ form {
 
 .form-field {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 10px;
+  width: 100%;
 }
 
 .header {

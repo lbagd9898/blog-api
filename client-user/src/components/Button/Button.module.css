@@ -1,10 +1,29 @@
 .button {
-  background-color: coral;
   font-weight: bold;
   border: none;
   box-shadow: 2px 2px 2px lightgray;
+  width: fit-content;
+  text-decoration: none;
+  display: inline-block;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.button:hover {
+.primary {
+  background-color: coral;
+  color: black;
+}
+
+.secondary {
+  background-color: lightblue;
+  color: black;
+}
+
+.secondary:hover {
+  background-color: #9acee0;
+  color: black;
+}
+
+.primary:hover {
   background-color: #cd5b45;
 }
