@@ -1,6 +1,6 @@
 import styles from "./Form.module.css";
 import Button from "../Button/Button";
-import { useState, useEffect } from "react";
+import Errors from "../Errors/Errors";
 
 function Form({
   fields,
@@ -9,6 +9,7 @@ function Form({
   inputVals,
   handleChange,
   onSubmit,
+  errors,
 }) {
   return (
     <div className={styles["form-div"]}>
@@ -27,6 +28,7 @@ function Form({
         ))}
         <Button text={buttonText}></Button>
       </form>
+      {errors.length > 0 && <Errors errors={errors} />}
     </div>
   );
 }

@@ -13,6 +13,8 @@ function SignUp() {
   ];
   const buttonText = "Sign Up";
 
+  const [errors, setErrors] = useState([]);
+
   const [inputVals, setInputVals] = useState(() =>
     fields.reduce((acc, field) => {
       return { ...acc, [field.name]: "" };
@@ -53,6 +55,7 @@ function SignUp() {
   function onSubmit(e) {
     e.preventDefault();
     const errors = validate(inputVals);
+    setErrors(errors);
     console.log(errors);
     console.log("submitted");
   }
@@ -68,6 +71,7 @@ function SignUp() {
           inputVals={inputVals}
           handleChange={handleChange}
           onSubmit={onSubmit}
+          errors={errors}
         ></Form>
         <Button text="Login" variant="secondary" link="/"></Button>
       </main>
