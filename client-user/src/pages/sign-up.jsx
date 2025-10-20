@@ -15,6 +15,9 @@ function SignUp() {
 
   const [errors, setErrors] = useState([]);
 
+  //sets boolean for if user has started typing or not
+  const [touched, setTouched] = useState(false);
+
   const [inputVals, setInputVals] = useState(() =>
     fields.reduce((acc, field) => {
       return { ...acc, [field.name]: "" };
@@ -22,12 +25,18 @@ function SignUp() {
   );
 
   useEffect(() => {
-    console.log(inputVals);
+    if (touched) {
+      const errors = validate(inputVals);
+      setErrors(errors);
+    }
   }, [inputVals]);
 
   function handleChange(e) {
     const { name, value } = e.target;
     setInputVals((prev) => ({ ...prev, [name]: value }));
+    if (!touched) {
+      setTouched(true);
+    }
   }
 
   //validates form inputs before sending to server
@@ -54,9 +63,6 @@ function SignUp() {
 
   function onSubmit(e) {
     e.preventDefault();
-    const errors = validate(inputVals);
-    setErrors(errors);
-    console.log(errors);
     console.log("submitted");
   }
 
