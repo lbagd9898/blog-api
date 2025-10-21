@@ -1,6 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const prisma = require("../prismaClient/");
+const prisma = require("../prismaClient");
 const bcrypt = require("bcryptjs");
 
 passport.use(

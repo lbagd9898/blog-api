@@ -8,10 +8,10 @@ function getSignUp(req, res) {
   res.send("sign up page");
 }
 
-// const postSignUp = [
-//     //some stuff to enter user into database
-//     //redirect to login page
-// ]
+async function postSignUp(req, res) {
+  const { username, password } = req.body;
+  console.log("user created.");
+}
 
 // const postLogIn = [
 //     //user is authenticated
@@ -43,4 +43,4 @@ function getPosts(req, res) {
   });
 }
 
-module.exports = { getHomepage, getSignUp, postLogIn, getPosts };
+module.exports = { getHomepage, getSignUp, postLogIn, getPosts, postSignUp };

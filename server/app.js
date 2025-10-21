@@ -1,6 +1,6 @@
 require("dotenv").config();
 const router = require("./routes/router");
-const passport = require(".middleware.passport");
+const passport = require("./middleware/passport");
 
 const express = require("express");
 
