@@ -8,9 +8,9 @@ function getSignUp(req, res) {
   res.send("sign up page");
 }
 
-async function postSignUp(req, res) {
-  const { username, password } = req.body;
-  console.log("user created.");
+function postSignUp(req, res) {
+  const body = req.body;
+  res.json(body);
 }
 
 // const postLogIn = [

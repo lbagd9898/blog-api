@@ -3,6 +3,7 @@ import Header from "../components/Header/Header.jsx";
 import Form from "../components/Form/Form.jsx";
 import Button from "../components/Button/Button.jsx";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function SignUp() {
   const title = "Please create your login credentials below.";
@@ -17,6 +18,9 @@ function SignUp() {
 
   //sets boolean for if user has started typing or not
   const [touched, setTouched] = useState(false);
+
+  //initialize redirects
+  const navigate = useNavigate();
 
   const [inputVals, setInputVals] = useState(() =>
     fields.reduce((acc, field) => {
@@ -63,14 +67,26 @@ function SignUp() {
 
   async function onSubmit(e) {
     e.preventDefault();
+    console.log("submitted");
     try {
-      const response = await fetch('http://localhost:3000/sign-up', {
+      const response = await fetch("http://localhost:3000/sign-up", {
         method: "POST",
         headers: {
-          'Content-Type': "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(inputVals)
-      })
+        body: JSON.stringify(inputVals),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log("signup successful", data);
+        navigate("/");
+      } else {
+        console.log("Signup failed:", data);
+      }
+    } catch (err) {
+      console.log(err, "failed to connect");
     }
   }
 
