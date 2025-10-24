@@ -4,6 +4,7 @@ import Form from "../components/Form/Form.jsx";
 import Button from "../components/Button/Button.jsx";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { flushSync } from "react-dom";
 
 function SignUp() {
   const title = "Please create your login credentials below.";
@@ -18,6 +19,9 @@ function SignUp() {
 
   //sets boolean for if user has started typing or not
   const [touched, setTouched] = useState(false);
+
+  //message to let user know if login failed
+  const [flashMessage, setFlashMessage] = useState("");
 
   //initialize redirects
   const navigate = useNavigate();
@@ -50,7 +54,7 @@ function SignUp() {
     if (!values.username) {
       errors.push("Username required.");
     } else if (values.username.length < 4 || values.username.length > 15) {
-      errors.push("Username must bet between 5 and 15 characters.");
+      errors.push("Username must be between 5 and 15 characters.");
     }
     if (!values.password) {
       errors.push("Password required.");
@@ -81,11 +85,18 @@ function SignUp() {
 
       if (response.ok) {
         console.log("signup successful", data);
-        navigate("/");
+        navigate("/", {
+          state: {
+            flashMessage: "Sign up successful, please enter login credentials.",
+          },
+        });
+      } else if (response.status === 409) {
+        setFlashMessage("Username already exists. Please choose another.");
       } else {
-        console.log("Signup failed:", data);
+        setFlashMessage("Signup failed. Please try again.");
       }
     } catch (err) {
+      setFlashMessage("Failed to connect to server.");
       console.log(err, "failed to connect");
     }
   }
@@ -104,6 +115,7 @@ function SignUp() {
           errors={errors}
         ></Form>
         <Button text="Login" variant="secondary" link="/"></Button>
+        {flashMessage && <div className="flash-message">{flashMessage}</div>}
       </main>
     </>
   );

@@ -3,6 +3,7 @@ import "./App.css";
 import Header from "./components/Header/Header.jsx";
 import Form from "./components/Form/Form.jsx";
 import Button from "./components/Button/Button.jsx";
+import { useLocation } from "react-router-dom";
 
 function App() {
   const title = "Please enter your login credentials below.";
@@ -27,11 +28,17 @@ function App() {
 
   useEffect(() => {
     if (touched) {
-      console.log(errors);
       const newErrors = validate(inputVals);
       setErrors(newErrors);
     }
   }, [inputVals]);
+
+  // other message if invalid login details
+  const [loginMsg, setloginMsg] = useState("");
+
+  //location flash message
+  const location = useLocation();
+  const message = location.state?.flashMessage;
 
   function handleChange(e) {
     const { name, value } = e.target;
@@ -52,9 +59,28 @@ function App() {
     return errors;
   }
 
-  function onSubmit(e) {
+  async function onSubmit(e) {
+    console.log("login process iniitiated");
     e.preventDefault();
-    console.log("submitted");
+    try {
+      const response = await fetch("http://localhost:3000/log-in", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(inputVals),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log(data);
+      } else {
+        setloginMsg(data.message);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   return (
@@ -71,6 +97,8 @@ function App() {
           errors={errors}
         ></Form>
         <Button text="Sign up" variant="secondary" link="/sign-up" />
+        <div>{message && <div className="flash-message">{message}</div>}</div>
+        {loginMsg && <div className="flash-message">{loginMsg}</div>}
       </main>
     </>
   );
