@@ -3,9 +3,12 @@ import "./App.css";
 import Header from "./components/Header/Header.jsx";
 import Form from "./components/Form/Form.jsx";
 import Button from "./components/Button/Button.jsx";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "./utils/AuthContext.jsx";
 
 function App() {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const title = "Please enter your login credentials below.";
 
   const fields = [
@@ -74,7 +77,10 @@ function App() {
       const data = await response.json();
 
       if (response.ok) {
+        login(data.token);
         console.log(data);
+        console.log(data.token);
+        navigate("/dashboard");
       } else {
         setloginMsg(data.message);
       }
