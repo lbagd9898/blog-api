@@ -1,11 +1,11 @@
 import styles from "./Comment.module.css";
 
-function Comment() {
+function Comment({ comment }) {
   return (
     <div className={styles["comment-card"]}>
       <p>User</p>
-      <p>Comment comment comment</p>
-      <em>Date time</em>
+      <p>{comment.content}</p>
+      <em>{comment.postedAt}</em>
     </div>
   );
 }

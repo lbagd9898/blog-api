@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 function Dashboard() {
   const { token } = useAuth();
   const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!token) return;
@@ -26,21 +28,44 @@ function Dashboard() {
         }
         const data = await response.json();
         console.log(data);
-        setPosts(data);
+        setPosts(data.posts);
+        setComments(data.comments);
       } catch (err) {
         console.error("Error fetching posts:", err);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPosts();
   }, [token]);
 
+  useEffect(() => {
+    console.log(posts);
+  }, [posts]);
+
+  if (loading) {
+    <>
+      <Header />
+      <main className={styles.dashboard}>
+        <h2>Loading posts...</h2>
+      </main>
+    </>;
+  }
+
   return (
     <>
       <Header></Header>
       <main>
         <h2>Welcome, user.</h2>
-        <Post></Post>
+        {posts.map((post) => {
+          const postComments = comments.filter(
+            (comment) => comment.postId === post.id
+          );
+          return (
+            <Post key={post.id} post={post} comments={postComments}></Post>
+          );
+        })}
       </main>
     </>
   );
