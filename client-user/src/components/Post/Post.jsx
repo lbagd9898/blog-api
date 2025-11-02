@@ -1,13 +1,14 @@
 import styles from "./Post.module.css";
 import Comment from "../Comment/Comment";
 
-function Post({ key, post, comments }) {
+function Post({ post }) {
   return (
     <div className={styles["card"]}>
       <h3 className={styles["header"]}>{post.title}</h3>
+      <em>{post.user.username}</em>
       <p>{post.content}</p>
       <em> {post.postedAt}</em>
-      {comments.map((comment) => (
+      {post.comments.map((comment) => (
         <Comment comment={comment}></Comment>
       ))}
     </div>

@@ -59,9 +59,21 @@ function postLogIn(req, res, next) {
 async function getPosts(req, res) {
   console.log("server reached");
   try {
-    const posts = await prisma.posts.findMany();
-    const comments = await prisma.comments.findMany();
-    return res.json({ posts, comments });
+    const posts = await prisma.posts.findMany({
+      include: {
+        user: {
+          select: { username: true },
+        },
+        comments: {
+          include: {
+            user: {
+              select: { username: true },
+            },
+          },
+        },
+      },
+    });
+    return res.json({ posts });
   } catch (e) {
     console.error(e);
     return res.status(500).json({ message: "failed to fetch posts" });

@@ -7,7 +7,6 @@ import { useState, useEffect } from "react";
 function Dashboard() {
   const { token } = useAuth();
   const [posts, setPosts] = useState([]);
-  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,7 +28,6 @@ function Dashboard() {
         const data = await response.json();
         console.log(data);
         setPosts(data.posts);
-        setComments(data.comments);
       } catch (err) {
         console.error("Error fetching posts:", err);
       } finally {
@@ -58,14 +56,9 @@ function Dashboard() {
       <Header></Header>
       <main>
         <h2>Welcome, user.</h2>
-        {posts.map((post) => {
-          const postComments = comments.filter(
-            (comment) => comment.postId === post.id
-          );
-          return (
-            <Post key={post.id} post={post} comments={postComments}></Post>
-          );
-        })}
+        {posts.map((post) => (
+          <Post post={post}></Post>
+        ))}
       </main>
     </>
   );
